@@ -4,6 +4,8 @@
 
     <solid android:color="@color/background_menu"/>
 
-    <corners android:radius="2dp"/>
+    <corners android:radius="20dp"/>
+
+    <stroke android:color="@color/md_red_900" android:width="2dp"/>
 
 </shape>
