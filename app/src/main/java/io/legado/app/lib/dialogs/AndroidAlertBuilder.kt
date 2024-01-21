@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import io.legado.app.R
 import io.legado.app.utils.applyTint
 
 internal class AndroidAlertBuilder(override val ctx: Context) : AlertBuilder<AlertDialog> {

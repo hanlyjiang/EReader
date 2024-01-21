@@ -140,13 +140,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/search_content"
+                app:rippleColor="@color/transparent"
                 android:src="@drawable/ic_search"
                 android:tint="@color/primaryText"
                 android:tooltipText="@string/search_content"
                 app:backgroundTint="@color/background_menu"
-                app:elevation="2dp"
+                app:borderWidth="1dp"
+                app:elevation="0dp"
                 app:fabSize="mini"
-                app:pressedTranslationZ="2dp"
+                app:pressedTranslationZ="0dp"
                 tools:ignore="UnusedAttribute" />
 
             <Space
@@ -210,6 +212,11 @@
                 tools:ignore="UnusedAttribute" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_color"/>
 
         <!--底部设置栏-->
         <FrameLayout

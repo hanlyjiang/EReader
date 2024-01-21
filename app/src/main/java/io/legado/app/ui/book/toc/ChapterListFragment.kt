@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import io.legado.app.R
@@ -46,8 +47,8 @@ class ChapterListFragment : VMBaseFragment<TocViewModel>(R.layout.fragment_chapt
         val btc = requireContext().getPrimaryTextColor(ColorUtils.isColorLight(bbg))
         llChapterBaseInfo.setBackgroundColor(bbg)
         tvCurrentChapterInfo.setTextColor(btc)
-        ivChapterTop.setColorFilter(btc, PorterDuff.Mode.SRC_IN)
-        ivChapterBottom.setColorFilter(btc, PorterDuff.Mode.SRC_IN)
+        ivChapterNext.setColorFilter(btc, PorterDuff.Mode.SRC_IN)
+        ivChapterPrevious.setColorFilter(btc, PorterDuff.Mode.SRC_IN)
         initRecyclerView()
         initView()
         viewModel.bookData.observe(this@ChapterListFragment) {
@@ -62,13 +63,39 @@ class ChapterListFragment : VMBaseFragment<TocViewModel>(R.layout.fragment_chapt
     }
 
     private fun initView() = binding.run {
-        ivChapterTop.setOnClickListener {
+        tvChapterTop.setOnClickListener {
             mLayoutManager.scrollToPositionWithOffset(0, 0)
         }
-        ivChapterBottom.setOnClickListener {
+        tvChapterBottom.setOnClickListener {
             if (adapter.itemCount > 0) {
                 mLayoutManager.scrollToPositionWithOffset(adapter.itemCount - 1, 0)
             }
+        }
+        ivChapterNext.setOnClickListener {
+            val nextPos =
+                mLayoutManager.findLastCompletelyVisibleItemPosition() + 1
+            if (adapter.itemCount <= nextPos) {
+                Toast.makeText(context, "已经是最后一页了", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            mLayoutManager.scrollToPositionWithOffset(nextPos, 0)
+        }
+        ivChapterPrevious.setOnClickListener {
+            val childCount = mLayoutManager.let {
+                it.findLastCompletelyVisibleItemPosition() - it.findFirstCompletelyVisibleItemPosition() + 1
+            }
+            val findFirstCompletelyVisibleItemPosition =
+                mLayoutManager.findFirstCompletelyVisibleItemPosition()
+            if(findFirstCompletelyVisibleItemPosition == 0){
+                Toast.makeText(context, "已经是第一页了", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            var nextPos =
+                findFirstCompletelyVisibleItemPosition - childCount
+            if( nextPos <= 0){
+                nextPos = 0
+            }
+            mLayoutManager.scrollToPositionWithOffset(nextPos, 0)
         }
         tvCurrentChapterInfo.setOnClickListener {
             mLayoutManager.scrollToPositionWithOffset(durChapterIndex, 0)

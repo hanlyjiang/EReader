@@ -33,6 +33,25 @@
         <item name="android:popupMenuStyle">@style/Style.PopupMenu</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+        <!-- 顶部 actionMenu点击效果  -->
+        <item name="android:actionBarItemBackground">@null</item>
+        <item name="android:dialogTheme">@style/AppTheme.ElinkDialog</item>
+        <!-- AlertDialog attributes -->
+        <item name="android:alertDialogTheme">@style/AppTheme.ElinkDialog</item>
+        <!-- 禁用点击效果 -->
+        <item name="android:selectableItemBackgroundBorderless">@null</item>
+        <item name="android:selectableItemBackground">@null</item>
+    </style>
+
+    <style name="AppTheme.ElinkDialog" parent="ThemeOverlay.AppCompat.Dialog" >
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@drawable/ic_eink_dialog_bg</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:colorBackground">@color/transparent</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay.Light" parent="ThemeOverlay.AppCompat.Light">
@@ -46,6 +65,8 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="overlapAnchor">false</item>
         <item name="colorAccent">@color/md_grey_900</item>
+        <item name="android:windowBackground">@drawable/ic_eink_dialog_bg</item>
+        <item name="colorBackgroundFloating">@color/background_floating_material_light</item>
     </style>
 
     <style name="Spinner" parent="android:Theme.Holo.Light" />

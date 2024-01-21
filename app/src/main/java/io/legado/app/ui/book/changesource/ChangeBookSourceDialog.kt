@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -197,11 +198,42 @@ class ChangeBookSourceDialog() : BaseDialogFragment(R.layout.dialog_book_change_
         binding.tvDur.setOnClickListener {
             scrollToDurSource()
         }
-        binding.ivTop.setOnClickListener {
+        binding.tvTop.setOnClickListener {
             binding.recyclerView.scrollToPosition(0)
         }
-        binding.ivBottom.setOnClickListener {
+        binding.tvBottom.setOnClickListener {
             binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
+        }
+        binding.ivNext.setOnClickListener {
+            binding.recyclerView.run {
+                (layoutManager as LinearLayoutManager).let {
+                    val pos = it.findLastCompletelyVisibleItemPosition() + 1
+                    if (pos >= (adapter?.itemCount ?: Int.MAX_VALUE)) {
+                        Toast.makeText(context, "已经是最后一页了", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    it.scrollToPositionWithOffset(pos, 0)
+                }
+            }
+        }
+        binding.ivPrevious.setOnClickListener {
+            (binding.recyclerView.layoutManager as? LinearLayoutManager)?.let {
+                val childCount = it.let {
+                    it.findLastCompletelyVisibleItemPosition() - it.findFirstCompletelyVisibleItemPosition() + 1
+                }
+                val findFirstCompletelyVisibleItemPosition =
+                    it.findFirstCompletelyVisibleItemPosition()
+                if (findFirstCompletelyVisibleItemPosition == 0) {
+                    Toast.makeText(context, "已经是第一页了", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                var nextPos =
+                    findFirstCompletelyVisibleItemPosition - childCount
+                if( nextPos <= 0){
+                    nextPos = 0
+                }
+                it.scrollToPositionWithOffset(nextPos, 0)
+            }
         }
     }
 
